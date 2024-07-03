@@ -1,0 +1,59 @@
+<div style="text-align: center;">
+  <button (click)="toggleForm()">Sign In</button>
+  <button (click)="toggleForm()">Sign Up</button>
+  <button (click)="navigateToResetPassword()">Reset Password</button>
+</div>
+
+<form *ngIf="isSignIn" [formGroup]="signInForm" (ngSubmit)="onSubmit()">
+  <h2>Sign In</h2>
+  <div>
+    <label for="signInEmail">Email</label>
+    <input id="signInEmail" formControlName="email" type="email">
+    <div *ngIf="signInForm.get('email')?.invalid && signInForm.get('email')?.touched" class="error">
+      Invalid email.
+    </div>
+  </div>
+  <div>
+    <label for="signInPassword">Password</label>
+    <input id="signInPassword" formControlName="password" [type]="passwordFieldType">
+    <button type="button" (click)="togglePasswordVisibility()">
+      {{ passwordFieldType === 'password' ? 'Show' : 'Hide' }} Password
+    </button>
+    <div *ngIf="signInForm.get('password')?.invalid && signInForm.get('password')?.touched" class="error">
+      Password must be at least 8 characters long, include uppercase letters, lowercase letters, numbers, and special characters.
+    </div>
+  </div>
+  <button type="submit" [disabled]="signInForm.invalid">Submit</button>
+  <button type="button" (click)="navigateToForgotPassword()">Forgot Password</button>
+</form>
+
+  
+  <form *ngIf="!isSignIn" [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
+    <h2>Sign Up</h2>
+    <div>
+      <label for="signUpName">Name</label>
+      <input id="signUpName" formControlName="name" type="text">
+      <div *ngIf="signUpForm.get('name')?.invalid && signUpForm.get('name')?.touched" class="error">
+        Name is required.
+      </div>
+    </div>
+    <div>
+      <label for="signUpEmail">Email</label>
+      <input id="signUpEmail" formControlName="email" type="email">
+      <div *ngIf="signUpForm.get('email')?.invalid && signUpForm.get('email')?.touched" class="error">
+        Invalid email.
+      </div>
+    </div>
+    <div>
+      <label for="signUpPassword">Password</label>
+      <input id="signUpPassword" formControlName="password" [type]="passwordFieldType">
+      <button type="button" (click)="togglePasswordVisibility()">
+        {{ passwordFieldType === 'password' ? 'Show' : 'Hide' }} Password
+      </button>
+      <div *ngIf="signUpForm.get('password')?.invalid && signUpForm.get('password')?.touched" class="error">
+        Password must be at least 8 characters long, include uppercase letters, lowercase letters, numbers, and special characters.
+      </div>
+    </div>
+    <button type="submit" [disabled]="signUpForm.invalid">Submit</button>
+  </form>
+  
